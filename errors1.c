@@ -5,34 +5,41 @@
 * Return: 0 if no numbers in string, converted number otherwise
 * -1 on error
 */
-int _erratoi(const char *s) {
+int _erratoi(const char *s)
+{{
 int result = 0;
 int sign = 1;
 
-if (*s == '+') {
+if (*s == '+')
+{
 s++;
-} else if (*s == '-') {
+}
+else if (*s == '-')
+{
 sign = -1;
 s++;
 }
 
-for (; *s != '\0'; s++) {
-if (*s >= '0' && *s <= '9') {
+for (; *s != '\0'; s++)
+{
+if (*s >= '0' && *s <= '9')
+{
 int digit = *s - '0';
 
-// Check for overflow
-if (result > (INT_MAX - digit) / 10) {
+if (result > (INT_MAX - digit) / 10)
+{
 return (-1);
 }
 
 result = result * 10 + digit;
 }
-else {
+else
+{
 return (-1);
 }
 }
 
-return( result * sign);
+return (result *sign);
 }
 /**
 * print_error - prints an error message
@@ -41,7 +48,9 @@ return( result * sign);
 * Return: 0 if no numbers in string, converted number otherwise
 * -1 on error
 */
-void print_error(const char *filename, int line_count, const char *command, const char *error) {
+void print_error(const char *filename, int line_count,
+		const char *command, const char *error)
+{
 fprintf(stderr, "%s: %d: %s: %s\n", filename, line_count, command, error);
 }
 /**
@@ -51,25 +60,23 @@ fprintf(stderr, "%s: %d: %s: %s\n", filename, line_count, command, error);
 *
 * Return: number of characters printed
 */
-int print_d(int input, FILE *file) {
+int print_d(int input, FILE *file)
+{
 int count = 0;
 unsigned int abs_value = (input < 0) ? -input : input;
 
-if (input < 0) {
+if (input < 0)
 count += fprintf(file, "-");
-}
 
 int divisor = 1;
-while (abs_value / divisor >= 10) {
+while (abs_value / divisor >= 10)
 divisor *= 10;
-}
 
-while (divisor != 0) {
+while (divisor != 0)
 int digit = abs_value / divisor;
 abs_value %= divisor;
 divisor /= 10;
 count += fprintf(file, "%d", digit);
-}
 
 return (count);
 }
@@ -81,26 +88,26 @@ return (count);
 *
 * Return: string
 */
-char *convert_number(long int num, int base, int flags) {
+char *convert_number(long int num, int base, int flags)
+{
 static char buffer[50];
-const char *array = (flags & CONVERT_LOWERCASE) ? "0123456789abcdef" : "0123456789ABCDEF";
+const char *array = (flags & CONVERT_LOWERCASE) ?
+	"0123456789abcdef" : "0123456789ABCDEF";
 char sign = 0;
 char *ptr = &buffer[49];
 *ptr = '\0';
 
-if (!(flags & CONVERT_UNSIGNED) && num < 0) {
+if (!(flags & CONVERT_UNSIGNED) && num < 0)
 num = -num;
 sign = '-';
-}
 
 do {
 *--ptr = array[num % base];
 num /= base;
 } while (num != 0);
 
-if (sign) {
+if (sign)
 *--ptr = sign;
-}
 
 return (ptr);
 }
@@ -110,16 +117,20 @@ return (ptr);
 *
 * Return: Always 0;
 */
-void remove_comments(char *buf) {
-for (int i = 0; buf[i] != '\0'; i++) {
-if (buf[i] == '#' && (i == 0 || buf[i - 1] == ' ')) {
+void remove_comments(char *buf)
+{
+for (int i = 0; buf[i] != '\0'; i++)
+{
+if (buf[i] == '#' && (i == 0 || buf[i - 1] == ' '))
+{
 buf[i] = '\0';
 break;
 }
 }
 }
 
-int main() {
+int main(void))
+{
 char str[] = "12345";
 int num = erratoi(str);
 printf("Converted number: %d\n", num);
